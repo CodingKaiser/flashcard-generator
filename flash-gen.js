@@ -16,13 +16,17 @@ class ProgramManager {
         choices: ['Review your cards', 'Make a Cloze flash card', 'Make a Basic flash card']
       }
     ]).then((answer) => {
-
+      if (answer.prompt === 'Review your cards') {
+        this.flashcards.getClozeCards().forEach((card) => card.printCardContents());
+        this.flashcards.getBasicCards().forEach((card) => card.printCardContents());
+      }
     });
   }
 }
 
 var manager = new ProgramManager();
-setTimeout(() => { manager.flashcards.clozeCards.forEach((card) => card.printCardContents()); manager.flashcards.basicCards.forEach((card) => card.printCardContents());}, 1000);
+manager.promptUserForAction();
+// setTimeout(() => { manager.flashcards.clozeCards.forEach((card) => card.printCardContents()); manager.flashcards.basicCards.forEach((card) => card.printCardContents());}, 1000);
 
 // var hello = new ClozeFlashCard("Yup, there is definitely NOOOO something here.", "NOOOO");
 // hello.printCardContents();

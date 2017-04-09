@@ -19,13 +19,16 @@ class ClozeFlashCard extends FlashCardBase {
 	}
 
 	printCardContents() {
+		var questionString = "Question: " + this.getPartialQuestion();
+		var answerString = "Answer: " + this.getSolution();
+		var longestLineLength = (questionString.length >= answerString.length) ?
+														questionString.length : answerString.length;
 		console.log("");
-		console.log("--------------------");
-		console.log("Cloze Flash Card:");
-		console.log(this.getSolution());
-		console.log(this.getQuestion());
-		console.log(this.getPartialQuestion());
-		console.log("--------------------");
+		console.log("-".repeat(longestLineLength));
+		console.log("Cloze Flash Card - ");
+		console.log(questionString);
+		console.log(answerString);
+		console.log("-".repeat(longestLineLength));
 	}
 }
 
