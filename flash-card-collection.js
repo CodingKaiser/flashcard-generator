@@ -27,6 +27,16 @@ class FlashCardCollection {
     });
   }
 
+  addClozeCard(question, solution) {
+    this.clozeCards.push(new ClozeFlashCard(question, solution));
+    fs.appendFile("cards.txt", "Cloze|" + question + "|" + solution + "\n", (err) => { if (err) console.log(err) });
+  }
+
+  addBasicCard(question, solution) {
+    this.basicCards.push(new BasicFlashCard(question, solution));
+    fs.appendFile("cards.txt", "Basic|" + question + "|" + solution + "\n", (err) => { if (err) console.log(err) });
+  }
+
   getClozeCards() {
     return this.clozeCards;
   }
