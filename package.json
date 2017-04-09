@@ -1,0 +1,28 @@
+{
+  "name": "flashcard-generator",
+  "version": "1.0.0",
+  "description": "Creates a bunch of flash cards",
+  "main": "flash-gen.js",
+  "dependencies": {
+    "inquirer": "^3.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodingKaiser/flashcard-generator.git"
+  },
+  "keywords": [
+    "flash",
+    "cards",
+    "quizlet-destroyer"
+  ],
+  "author": "Falko Noe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CodingKaiser/flashcard-generator/issues"
+  },
+  "homepage": "https://github.com/CodingKaiser/flashcard-generator#readme"
+}

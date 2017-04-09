@@ -4,14 +4,14 @@ class ClozeFlashCard extends FlashCardBase {
 	constructor(question, solution) {
 		super(question, solution);
 		this.partial = "";
-		var indexClozeStart = this.question.toLowerCase().indexOf(
-								this.solution.toLowerCase());
-		if (indexClozeStart < 0) {
-			throw new Error("Sorry, the cloze was not found.");
+		this._generatePartialQuestion();
+	}
+
+	_generatePartialQuestion() {
+		if (this.question.includes(this.solution)) {
+			var re = new RegExp(this.solution);
+			this.partial = this.question.replace(re, "...");
 		}
-		this.partial = this.question.slice(0, indexClozeStart) + 
-						"..." + this.question.slice(indexClozeStart + 
-						this.solution.length);
 	}
 
 	getPartialQuestion() {
@@ -19,6 +19,7 @@ class ClozeFlashCard extends FlashCardBase {
 	}
 
 	printCardContents() {
+		console.log("");
 		console.log("--------------------");
 		console.log("Cloze Flash Card:");
 		console.log(this.getSolution());

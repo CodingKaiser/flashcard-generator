@@ -13,6 +13,7 @@ class FlashCardBase {
 	}
 
 	printCardContents() {
+		console.log("");
 		console.log("--------------------");
 		console.log("Flash Card:");
 		console.log(this.getSolution());

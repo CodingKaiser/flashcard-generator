@@ -6,6 +6,7 @@ class BasicFlashCard extends FlashCardBase {
 	}
 
 	printCardContents() {
+		console.log("");
 		console.log("--------------------");
 		console.log("Basic Flash Card:");
 		console.log(this.getSolution());
