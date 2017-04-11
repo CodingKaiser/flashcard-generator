@@ -13,19 +13,73 @@ class ProgramManager {
         type: "list",
         name: "prompt",
         message: "What would you like to do?",
-        choices: ['Review your cards', 'Make a Cloze flash card', 'Make a Basic flash card']
+        choices: ['Display your cards', 'Review your cards','Make a Cloze flash card', 'Make a Basic flash card']
       }
     ]).then((answer) => {
-      if (answer.prompt === 'Review your cards') {
-        this.flashcards.getClozeCards().forEach((card) => card.printCardContents());
-        this.flashcards.getBasicCards().forEach((card) => card.printCardContents());
-        this.promptUserForAction();
+      if (answer.prompt === 'Display your cards') {
+        this.printAllCardsToStdout();
+      } else if (answer.prompt === 'Review your cards') {
+        var mixedCardArray = this.flashcards.getBasicCards().concat(this.flashcards.getClozeCards());
+        if (mixedCardArray.length) {
+          this.reviewFlashCards(mixedCardArray);
+        } else {
+          this.tellUserNoCardsFound();
+        }
       } else if (answer.prompt === 'Make a Cloze flash card') {
         this.promptUserForClozeCardInputs();
       } else {
         this.promptUserForBasicCardInputs();
       }
     });
+  }
+
+  tellUserNoCardsFound() {
+    console.log("You currently don't have any cards saved.")
+    console.log("");
+    this.promptUserForAction();
+  }
+
+  printAllCardsToStdout() {
+    if (this.flashcards.getClozeCards().length ||
+        this.flashcards.getBasicCards().length) {
+      this.flashcards.getClozeCards().forEach((card) => card.printCardContents());
+      this.flashcards.getBasicCards().forEach((card) => card.printCardContents());
+      this.promptUserForAction();
+    } else {
+      this.tellUserNoCardsFound();
+    }
+  }
+
+  reviewFlashCards(arrayOfCards) {
+    if (arrayOfCards.length) {
+      var indexOfCardToRemove = Math.floor(Math.random() * arrayOfCards.length);
+      var cardToRemove = arrayOfCards[indexOfCardToRemove];
+      arrayOfCards.splice(indexOfCardToRemove, 1);
+      inquirer.prompt([
+        {
+          type: "input",
+          name: "prompt",
+          message: (() => {
+            if (cardToRemove instanceof ClozeFlashCard) {
+              return "Fill in the blank: " + cardToRemove.getPartialQuestion();
+            }
+            return "What's the answer?: " + cardToRemove.getQuestion();
+          })(),
+          validate: (input) => {
+            if (input === cardToRemove.getSolution()) {
+              return true;
+            }
+            return false;
+          }
+        },
+      ]).then((answer) => {
+        this.reviewFlashCards(arrayOfCards);
+      });
+    } else {
+      console.log("You are done reviewing your cards.");
+      console.log("");
+      this.promptUserForAction();
+    }
   }
 
   promptUserForClozeCardInputs() {
