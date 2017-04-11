@@ -66,13 +66,16 @@ class ProgramManager {
             return "What's the answer?: " + cardToRemove.getQuestion();
           })(),
           validate: (input) => {
-            if (input === cardToRemove.getSolution()) {
+            if (input.toLowerCase() ===
+                cardToRemove.getSolution().toLowerCase().trim()) {
               return true;
             }
+            console.log("   Try again!");
             return false;
           }
         },
       ]).then((answer) => {
+        console.log("Correct!");
         this.reviewFlashCards(arrayOfCards);
       });
     } else {
