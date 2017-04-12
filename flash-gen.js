@@ -90,15 +90,15 @@ class ProgramManager {
       {
         type: "input",
         name: "prompt",
-        message: "Enter the card question and cloze, like: [question],[cloze]",
+        message: "Enter the card question and cloze, like: [question]|[cloze]",
         validate: (input) => {
-          var inputArray = input.split(",");
+          var inputArray = input.split("|");
           if (inputArray.length === 2 && inputArray[0].includes(inputArray[1].trim())) return true;
           return false;
         },
       }
     ]).then((answer) => {
-      var inputArray = answer.prompt.split(",");
+      var inputArray = answer.prompt.split("|");
       this.flashcards.addClozeCard(inputArray[0], inputArray[1].trim());
       this.promptUserForAction();
     });
@@ -109,14 +109,14 @@ class ProgramManager {
       {
         type: "input",
         name: "prompt",
-        message: "Enter the card question and cloze, like: [question],[cloze]",
+        message: "Enter the card question and cloze, like: [question]|[cloze]",
         validate: (input) => {
-          if (input.split(",").length === 2) return true;
+          if (input.split("|").length === 2) return true;
           return false;
         },
       }
     ]).then((answer) => {
-      var inputArray = answer.prompt.split(",");
+      var inputArray = answer.prompt.split("|");
       this.flashcards.addBasicCard(inputArray[0], inputArray[1].trim());
       this.promptUserForAction();
     });

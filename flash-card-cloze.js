@@ -9,7 +9,7 @@ class ClozeFlashCard extends FlashCardBase {
 
 	_generatePartialQuestion() {
 		if (this.question.includes(this.solution)) {
-			var re = new RegExp(this.solution);
+			var re = new RegExp(this.solution, "g");
 			this.partial = this.question.replace(re, "...");
 		}
 	}
